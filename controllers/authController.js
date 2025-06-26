@@ -74,7 +74,7 @@ exports.verifyEmail = async (req, res) => {
         const decode = jwt.verify(token, process.env.JWT_SECRET);
         const email = decode.email;
 
-        await db.none(`UPDATE users SET is_verified = true, verification_token = NULL WHERE email = $1`, [email]);
+        await db.none(`UPDATE users SET is_verified = true, verification_token = NULL WHERE email = $1, [email]`);
         res.send('Email verified successfully! You can now log in.');
     } catch (error) {
         res.send('Invalid or expired verification link')
